@@ -1,0 +1,22 @@
+version: "3"
+services:
+  usermanager:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: usermanager
+    restart: always
+    depends_on:
+      - auth_db
+    ports: 
+      - 8082:8082
+  auth_db:
+    image: mongo
+    restart: always
+    container_name: auth_db
+    ports:
+      - 27017:27017
+    environment:
+      POSTGRES_PASSWORD: root
+    volumes:
+    - ./database/mongo-entrypoint/:/docker-entrypoint-initdb.d/init.sql
