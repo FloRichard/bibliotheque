@@ -2,7 +2,6 @@ package storage
 
 import (
 	"context"
-	"log"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -11,18 +10,31 @@ import (
 
 var (
 	collection *mongo.Collection
-	logger     zap.Logger
+	logger     *zap.Logger
 )
 
-func Init() {
-	logger, _ := zap.NewProduction()
+func Init() error {
+	logger, _ = zap.NewProduction()
 	defer logger.Sync()
 
-	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017/")
-	client, err := mongo.Connect(context.Background(), clientOptions)
-	if err != nil {
-		log.Fatal(err)
+	authDBCredential := options.Credential{
+		Username: "user",
+		Password: "secret",
 	}
 
-	collection = client.Database("auth").Collection("user")
+	clientOptions := options.Client().ApplyURI("mongodb://auth_db:27017/").SetAuth(authDBCredential)
+	client, err := mongo.Connect(context.TODO(), clientOptions)
+	if err != nil {
+		logger.Error("Can't connect to mongoDB", zap.Error(err))
+		return err
+	}
+
+	if err := client.Ping(context.TODO(), nil); err != nil {
+		logger.Error("Can't ping mongoDB", zap.Error(err))
+		return err
+	}
+	
+
+	collection = client.Database("authDB").Collection("users")
+	return nil
 }

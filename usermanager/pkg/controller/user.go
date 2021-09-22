@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"encoding/json"
+	"io"
 	"net/http"
 
 	"github.com/FloRichard/bibliotheque/usermanager/pkg/storage"
@@ -11,20 +13,39 @@ import (
 )
 
 func AddUser(c *gin.Context) {
-	u := &structs.User{}
-	if err := c.ShouldBindHeader(u); err != nil {
-		logger.Error("Can't process request", zap.Error(err))
-		c.JSON(http.StatusBadRequest, "Invalid user")
+	b, err := io.ReadAll(c.Request.Body)
+	if err != nil {
+		logger.Error("Can't read request body", zap.Error(err))
+		c.JSON(http.StatusBadRequest, "Invalid request")
 		return
 	}
 
-	if err := storage.AddUser(*u); err != nil {
+	u := structs.User{}
+	if err := json.Unmarshal(b, &u); err != nil {
+		logger.Error("Can't bind body", zap.Error(err))
+		c.JSON(http.StatusBadRequest, "Invalid request")
+		return
+	}
+
+	uid, _ := uuid.NewRandom()
+
+	u.UUID = uid.String()
+
+	if err := storage.AddUser(u); err != nil {
 		logger.Error("Can't add user", zap.Error(err))
 		c.JSON(http.StatusBadRequest, "Invalid user")
 		return
 	}
 
-	c.JSON(http.StatusCreated, "")
+	responseBody := struct {
+		Id    string
+		Token string
+	}{
+		Id:    u.UUID,
+		Token: "",
+	}
+
+	c.JSON(http.StatusOK, responseBody)
 
 }
 

@@ -2,19 +2,24 @@ package router
 
 import (
 	"github.com/FloRichard/bibliotheque/usermanager/pkg/controller"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
-var (
-	Router *gin.Engine
-)
+func Init() *gin.Engine {
+	config := cors.DefaultConfig()
+	config.AllowAllOrigins = true
+	config.AllowCredentials = true
+	config.AddAllowHeaders("authorization")
 
-func Init() {
-	Router = gin.Default()
+	r := gin.New()
+	r.Use(cors.New(config))
+	r.Use(gin.Logger())
 
-	Router.DELETE("/user/:id", controller.DeleteUser)
-	Router.POST("/user", controller.AddUser)
+	r.DELETE("/user/:id", controller.DeleteUser)
+	r.POST("/user", controller.AddUser)
 
-	Router.GET("/identity/verify", controller.VerifyIdentity)
+	r.GET("/identity/verify", controller.VerifyIdentity)
+	return r
 
 }

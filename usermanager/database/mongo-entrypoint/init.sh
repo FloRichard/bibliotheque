@@ -1,0 +1,14 @@
+#! /bin/bash
+echo "creating user..."
+mongo admin --host localhost -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --eval "db.createUser(
+    {
+        user: '$MONGO_USERNAME',
+        pwd: '$MONGO_PASSWORD',
+        roles: [
+            {
+                role: 'readWrite',
+                db: 'authDB',
+            }
+        ]
+    });"
+echo "user created !"

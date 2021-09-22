@@ -16,7 +16,24 @@ services:
     container_name: auth_db
     ports:
       - 27017:27017
-    environment:
-      POSTGRES_PASSWORD: root
     volumes:
-    - ./database/mongo-entrypoint/:/docker-entrypoint-initdb.d/init.sql
+      - ./database/mongo-entrypoint/:/docker-entrypoint-initdb.d/
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_USERNAME: user
+      MONGO_PASSWORD: secret
+
+  mongo_seed:
+    image: mongo
+    container_name: mongo_seed
+    links:
+      - auth_db
+    volumes:
+      - ./database/mongoseed:/mongoseed
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    command:
+      /mongoseed/import.sh
+    
