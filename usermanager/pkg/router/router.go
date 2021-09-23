@@ -16,10 +16,12 @@ func Init() *gin.Engine {
 	r.Use(cors.New(config))
 	r.Use(gin.Logger())
 
-	r.DELETE("/user/:id", controller.DeleteUser)
-	r.POST("/user", controller.AddUser)
+	r.Group("/user").
+		POST("", controller.AddUser).
+		DELETE("/:id", controller.DeleteUser)
 
-	r.GET("/identity/verify", controller.VerifyIdentity)
+	r.POST("/login", controller.Login)
+
+	r.GET("/token/verify", controller.VerifyIdentity)
 	return r
-
 }

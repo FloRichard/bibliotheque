@@ -37,16 +37,7 @@ func AddUser(c *gin.Context) {
 		return
 	}
 
-	responseBody := struct {
-		Id    string
-		Token string
-	}{
-		Id:    u.UUID,
-		Token: "",
-	}
-
-	c.JSON(http.StatusOK, responseBody)
-
+	c.JSON(http.StatusCreated, "User created")
 }
 
 func DeleteUser(c *gin.Context) {
@@ -65,3 +56,5 @@ func DeleteUser(c *gin.Context) {
 
 	c.JSON(http.StatusNoContent, "")
 }
+
+

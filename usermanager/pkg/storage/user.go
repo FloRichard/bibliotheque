@@ -27,13 +27,43 @@ func DeleteUser(uuid string) error {
 	return nil
 }
 
-func VerifyIdentity(login, password string) {
+func Login(login, password string) (structs.User, error) {
 	filter := bson.D{
 		{Key: "login", Value: login},
 		{Key: "pwd", Value: password},
 	}
-	res := collection.FindOne(context.TODO(), filter)
-	if res.Err() != nil {
-		logger.Error("Can't find user", zap.Error(res.Err()))
+
+	u := structs.User{}
+	if err := collection.FindOne(context.TODO(), filter).Decode(&u); err != nil {
+		logger.Error("Can't find user", zap.Error(err))
+		return structs.User{}, err
 	}
+
+	return u, nil
+}
+
+func AddToken(token, id string) error {
+	searchFilter := bson.D{{Key: "id", Value: id}}
+	updateFilter := bson.D{{Key: "$set", Value: bson.D{{Key: "token", Value: token}}}}
+	_, err := collection.UpdateOne(context.TODO(), searchFilter, updateFilter)
+	if err != nil {
+		logger.Error("Can't update user", zap.Error(err))
+		return err
+	}
+	return nil
+}
+
+func GetRolesWithToken(token string) ([]string, error) {
+	filter := bson.D{
+		{Key: "token", Value: token},
+	}
+
+	u := structs.User{}
+	if err := collection.FindOne(context.TODO(), filter).Decode(&u); err != nil {
+		logger.Error("Can't find user", zap.Error(err))
+		return nil, err
+	}
+
+	return u.Roles, nil
+
 }
