@@ -1,0 +1,16 @@
+<html>
+    <label for="login">Login:</label><br>
+    <input type="text" id="login" name="login"><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password">
+
+<form action="http://localhost:8080/auth/login">
+    <input type="hidden" id="body">
+    <button type="submit" id="log in" name="log in">log in</button>
+</form>
+
+</html>
+
+<script type="text/javascript">
+    var formData = JSON.stringify($("#myForm").serializeArray());
+</script>
