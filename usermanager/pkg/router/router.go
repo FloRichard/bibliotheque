@@ -10,18 +10,16 @@ func Init() *gin.Engine {
 	config := cors.DefaultConfig()
 	config.AllowAllOrigins = true
 	config.AllowCredentials = true
-	config.AddAllowHeaders("authorization")
+	config.AddAllowHeaders("Authorization")
 
 	r := gin.New()
 	r.Use(cors.New(config))
 	r.Use(gin.Logger())
 
-	r.Group("/user").
-		POST("", controller.AddUser).
-		DELETE("/:id", controller.DeleteUser)
-
-	r.POST("/login", controller.Login)
-
-	r.GET("/token/verify", controller.VerifyIdentity)
+	r.Group("/auth").
+		POST("/user/", controller.AddUser).
+		DELETE("/user/:id", controller.DeleteUser).
+		POST("/login", controller.Login).
+		GET("/token/verify", controller.VerifyIdentity)
 	return r
 }
