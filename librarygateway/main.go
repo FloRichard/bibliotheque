@@ -9,7 +9,9 @@ import (
 func main() {
 
 	r := gin.Default()
-	r.LoadHTMLFiles("./templates/login.html")
+	r.LoadHTMLGlob("./templates/**/*")
+	r.Static("/assets", "./assets")
+	r.Static("/static", "./templates/static")
 
 	// Auth group of endpoint
 	r.Group("/auth").
@@ -18,7 +20,8 @@ func main() {
 		Any("/user/*id", proxy.Basic).
 		GET("/token/verify", proxy.Auth)
 
-	r.Group("/library")
+	r.Group("/library").
+		GET("/", handler.GetHomePage)
 
 	r.Run(":8080")
 }
