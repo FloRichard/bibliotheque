@@ -1,14 +1,14 @@
 <html>
     <head>
         <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    <script type="text/javascript" src="/static/login.js"></script>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <script type="text/javascript" src="/static/login.js"></script>
     </head>
 
-    <form id="logForm" action="/auth/login" method="POST">
+    <form id="logForm" action="/auth/login" method="POST" onsubmit="handleLogForm(document.forms['logForm']);">
         <div class="form-group">
             <label for="login">Login</label>
             <input type="text" class="form-control" id="login" name="login" aria-describedby="loginHelp" placeholder="Enter your login">
@@ -20,6 +20,11 @@
         </div>
         <button type="submit" class="btn btn-primary">Log in</button>
     </form>
-
 </html>
+
+<script type="text/javascript">
+     document.forms['logForm'].addEventListener('submit', (event) => {
+        handleLogForm(event)
+    });
+</script>
 

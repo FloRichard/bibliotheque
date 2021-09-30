@@ -18,7 +18,8 @@ func main() {
 		POST("/login", proxy.Basic).
 		GET("/login", handler.GetLoginPage).
 		Any("/user/*id", proxy.Basic).
-		GET("/token/verify", proxy.Auth)
+		GET("/token/verify", proxy.Auth).
+		GET("/userform", handler.GetUserForm)
 
 	r.Group("/library").
 		GET("/", handler.GetHomePage)
