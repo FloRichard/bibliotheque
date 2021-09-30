@@ -12,7 +12,7 @@ function handleLogForm(event){
                 console.log("body retrieved : ", responseBody)
             })
 
-            const url='http://localhost:8080/auth/userform';
+            const url='http://localhost:8080/auth/admin';
             window.location.replace(url)
         }else{
             console.log("wrong status code")

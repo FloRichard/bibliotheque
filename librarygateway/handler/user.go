@@ -11,7 +11,7 @@ func GetLoginPage(c *gin.Context) {
 	return
 }
 
-func GetUserForm(c *gin.Context) {
-	c.HTML(http.StatusOK, "users.html", gin.H{})
+func GetAdminView(c *gin.Context) {
+	c.HTML(http.StatusOK, "admin.html", gin.H{})
 	return
 }
