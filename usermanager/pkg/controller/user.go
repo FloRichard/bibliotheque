@@ -52,9 +52,18 @@ func DeleteUser(c *gin.Context) {
 	if err := storage.DeleteUser(uid.String()); err != nil {
 		logger.Error("Can't delete user", zap.Error(err))
 		c.JSON(http.StatusBadRequest, "invalid ID")
+		return
 	}
 
 	c.JSON(http.StatusNoContent, "")
 }
 
-
+func GetUsers(c *gin.Context) {
+	users, err := storage.GetAllUser()
+	if err != nil {
+		logger.Error("Can't get users", zap.Error(err))
+		c.JSON(http.StatusInternalServerError, "can't get all users")
+		return
+	}
+	c.JSON(http.StatusOK, users)
+}

@@ -7,20 +7,33 @@ import (
 	"net/http"
 
 	"github.com/FloRichard/bibliotheque/usermanager/pkg/storage"
-	"github.com/FloRichard/bibliotheque/usermanager/pkg/structs"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
 func Login(c *gin.Context) {
-	creds := structs.Credential{}
+	/* creds := structs.Credential{}
+
 	if err := c.ShouldBindJSON(&creds); err != nil {
 		logger.Error("Can't bind request body", zap.Error(err))
 		c.JSON(http.StatusBadRequest, "Wrong body")
 		return
+	} */
+	login, ok := c.GetPostForm("login")
+	if !ok {
+		logger.Error("Can't find login post form value ")
+		c.JSON(http.StatusBadRequest, "Wrong body")
+		return
 	}
 
-	user, err := storage.Login(creds.Login, creds.Password)
+	password, ok := c.GetPostForm("password")
+	if !ok {
+		logger.Error("Can't find password post form value ")
+		c.JSON(http.StatusBadRequest, "Wrong body")
+		return
+	}
+
+	user, err := storage.Login(login, password)
 	if err != nil {
 		logger.Error("Can't authenticate user", zap.Error(err))
 		c.JSON(http.StatusUnauthorized, "Wrong credentials")
@@ -37,8 +50,8 @@ func Login(c *gin.Context) {
 	user.Token = token
 
 	responseBody := struct {
-		Id    string
-		Token string
+		Id    string `json:"id"`
+		Token string `json:"token"`
 	}{
 		Id:    user.UUID,
 		Token: user.Token,

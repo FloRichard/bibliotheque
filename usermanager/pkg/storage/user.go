@@ -17,6 +17,22 @@ func AddUser(u structs.User) error {
 	return nil
 }
 
+func GetAllUser() ([]structs.User, error) {
+	cursor, err := collection.Find(context.TODO(), bson.M{})
+	if err != nil {
+		logger.Error("Can't retrieved users", zap.Error(err))
+		return nil, err
+	}
+
+	users := []structs.User{}
+	if err = cursor.All(context.TODO(), &users); err != nil {
+		logger.Error("Can't decode user", zap.Error(err))
+		return nil, err
+	}
+
+	return users, nil
+}
+
 func DeleteUser(uuid string) error {
 	filter := bson.D{{Key: "id", Value: uuid}}
 	_, err := collection.DeleteOne(context.TODO(), filter)
