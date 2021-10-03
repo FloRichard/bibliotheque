@@ -24,3 +24,20 @@ function addUser(){
         console.log(response.status);
     })
 }
+
+function deleteUser(userID){
+    options = {
+        url: 'http://' + window.location.hostname + ':8082/auth/user/'+userID,
+        method: 'DELETE',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Authorization': sessionStorage.getItem('token')
+        },
+    };
+
+    axios(options)
+    .then(response => {
+        console.log(response.status);
+    })
+}

@@ -20,7 +20,7 @@ function handleLogForm(event){
 
     }).catch((error) => {
         console.log("error" + error)
-        window.alert("heho")
-        alert("Wrong credentials")
+/*         window.alert("heho")
+        alert("Wrong credentials") */
     });
 }

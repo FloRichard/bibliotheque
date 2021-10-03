@@ -1,0 +1,6 @@
+authorization:
+  "/auth/user/":
+    method: "GET"
+    remote_host: "http://localhost:8082"
+    roles: 
+      - "borrowing"
