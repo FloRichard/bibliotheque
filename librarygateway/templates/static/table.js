@@ -1,6 +1,11 @@
 let tableHeaders = ["First name", "Last name", "Roles", "Actions"]
 
 const createuserboardTable = (userDiv) => {
+    var d =  document.getElementById('userTable')
+    if (d != null) {
+        d.parentNode.removeChild(d)
+    }
+  
     let userboardTable = document.createElement('table') // Create the table itself
     userboardTable.className = 'table table-bordered'
     userboardTable.id = 'userTable'
@@ -50,7 +55,7 @@ const appendUsers = (user, userIndex) => {
     deleteBtn.className = 'btn btn-danger';
     deleteBtn.textContent = 'delete';
    // deleteBtn.id = 
-    deleteBtn.onclick = function(){deleteUser(user.id)};
+    deleteBtn.onclick = function(){deleteUser(user.id); getUsers()};
     action.appendChild(deleteBtn);
 
     var modifyBtn = document.createElement('button');
@@ -67,9 +72,10 @@ const appendUsers = (user, userIndex) => {
 
 const getUsers = () => {
     userDiv =  document.getElementById("userboard")
+   
 
     options = {
-        url: 'http://localhost:8081/auth/user/',
+        url: 'http://localhost:8081/auth/users',
         method: 'GET',
         headers: {
             'Accept': 'application/json',

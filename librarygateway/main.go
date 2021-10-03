@@ -2,15 +2,12 @@ package main
 
 import (
 	"github.com/FloRichard/bibliotheque/librarygateway/handler"
-	"github.com/FloRichard/bibliotheque/librarygateway/middleware"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	middleware.Init()
 	r := gin.Default()
 	r.LoadHTMLGlob("./templates/**/*")
-	r.Static("/assets", "./assets")
 	r.Static("/static", "./templates/static")
 
 	r.Group("/auth").

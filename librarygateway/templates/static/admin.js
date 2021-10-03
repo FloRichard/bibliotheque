@@ -1,6 +1,6 @@
 function addUser(){
     options = {
-        url: 'http://' + window.location.hostname + ':8080/auth/user/',
+        url: 'http://' + window.location.hostname + ':8081/auth/user/',
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -27,7 +27,7 @@ function addUser(){
 
 function deleteUser(userID){
     options = {
-        url: 'http://' + window.location.hostname + ':8082/auth/user/'+userID,
+        url: 'http://' + window.location.hostname + ':8081/auth/user/'+userID,
         method: 'DELETE',
         headers: {
             'Accept': 'application/json',
