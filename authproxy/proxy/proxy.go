@@ -3,6 +3,7 @@ package proxy
 import (
 	"io/ioutil"
 
+	"github.com/FloRichard/bibliotheque/authproxy/structs"
 	"go.uber.org/zap"
 	"gopkg.in/yaml.v2"
 )
@@ -12,19 +13,8 @@ var (
 	loginEndpoint = "http://localhost:8080/auth/login"
 )
 var (
-	ProxyConfig Config
+	RequestChecker structs.RequestChecker
 )
-
-type Authorization struct {
-	//Path       string   `yaml:"path"`
-	Method     string   `yaml:"method"`
-	RemoteHost string   `yaml:"remote_host"`
-	Roles      []string `yaml:"roles"`
-}
-
-type Config struct {
-	Authorization map[string]Authorization `yaml:"authorization"`
-}
 
 func Init() error {
 	var err error
@@ -39,14 +29,12 @@ func Init() error {
 		logger.Error("Can't read file", zap.Error(err))
 		return err
 	}
-	ProxyConfig = Config{}
 
-	err = yaml.Unmarshal(yamlFile, &ProxyConfig)
-	if err != nil {
+	RequestChecker = structs.RequestChecker{}
+	if err = yaml.Unmarshal(yamlFile, &RequestChecker); err != nil {
 		logger.Error("Can't map yaml file", zap.Error(err))
 		return err
 	}
 
-	logger.Info("Proxy Config", zap.Any("", ProxyConfig))
 	return nil
 }

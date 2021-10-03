@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/FloRichard/bibliotheque/authproxy/proxy"
+	"github.com/FloRichard/bibliotheque/authproxy/structs"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -18,6 +19,10 @@ func main() {
 	r := gin.Default()
 	//r.Use(cors.New(config))
 	if err := proxy.Init(); err != nil {
+		return
+	}
+
+	if err := structs.Init(); err != nil {
 		return
 	}
 

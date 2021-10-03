@@ -5,6 +5,7 @@ import (
 	"net/http/httputil"
 	"net/url"
 
+	"github.com/FloRichard/bibliotheque/authproxy/structs"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -13,36 +14,55 @@ func Auth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
 		if authHeader == "" {
+			if c.Request.Method == "OPTIONS" {
+				setCORSHeader(c)
+				c.JSON(http.StatusOK, "")
+				return
+			}
 			logger.Warn("Missing authorization header", zap.String("value", authHeader))
 			c.Redirect(http.StatusTemporaryRedirect, loginEndpoint)
 			return
 		}
 
-		authorization, ok := ProxyConfig.Authorization[c.Request.URL.Path]
-		if !ok {
-			c.Next()
-			logger.Error("unknown path")
+		authorization, err := RequestChecker.Validate(c.Request.Method, c.Request.URL.Path)
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, "Malformed path or method")
 			return
 		}
 
-		remote, err := url.Parse(authorization.RemoteHost)
+		proxy, err := newProxy(c, authorization)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, "cant parse host : "+authorization.RemoteHost)
+			c.AbortWithStatusJSON(http.StatusInternalServerError, "")
+			return
 		}
-
-		//remote.Scheme = authorization.Method
-
-		proxy := httputil.NewSingleHostReverseProxy(remote)
-
-		proxy.Director = func(req *http.Request) {
-			req.Header = c.Request.Header
-			req.Host = remote.Host
-			req.URL.Scheme = remote.Scheme
-			req.URL.Host = remote.Host
-			req.Body = c.Request.Body
-			req.URL.Path = c.Request.URL.Path
-		}
-
 		proxy.ServeHTTP(c.Writer, c.Request)
 	}
+}
+
+func setCORSHeader(c *gin.Context) {
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT,DELETE")
+	c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+}
+
+func newProxy(c *gin.Context, auth structs.Authorization) (*httputil.ReverseProxy, error) {
+	remote, err := url.Parse(auth.RemoteHost)
+	if err != nil {
+		logger.Error("Can't par host", zap.Error(err))
+		return nil, err
+	}
+
+	proxy := httputil.NewSingleHostReverseProxy(remote)
+
+	proxy.Director = func(req *http.Request) {
+		req.Header = c.Request.Header
+		req.Host = remote.Host
+		req.URL.Scheme = remote.Scheme
+		req.URL.Host = remote.Host
+		req.Body = c.Request.Body
+		req.URL.Path = c.Request.URL.Path
+		req.Method = c.Request.Method
+	}
+
+	return proxy, nil
 }

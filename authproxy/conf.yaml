@@ -1,6 +1,16 @@
 authorization:
-  "/auth/user/":
+  "/auth/users":
     method: "GET"
+    remote_host: "http://localhost:8082"
+    roles: 
+      - "borrowing"
+  "/auth/user/":
+    method: "POST"
+    remote_host: "http://localhost:8082"
+    roles: 
+      - "borrowing"
+  "/auth/user/:id":
+    method: "DELETE"
     remote_host: "http://localhost:8082"
     roles: 
       - "borrowing"
