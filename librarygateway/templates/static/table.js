@@ -94,5 +94,6 @@ const getUsers = () => {
     }).catch((error) => {
         console.log("error" + error)
         alert(error)
+        window.location = 'http://localhost:8080/auth/login'
     });
 }
