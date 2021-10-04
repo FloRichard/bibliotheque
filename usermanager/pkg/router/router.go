@@ -16,7 +16,7 @@ func Init() *gin.Engine {
 	}
 
 	r := gin.New()
-	r.Use(cors.New(config))
+	//r.Use(cors.New(config))
 
 	r.Use(gin.Logger())
 
@@ -24,7 +24,7 @@ func Init() *gin.Engine {
 		POST("/user/", controller.AddUser).
 		GET("/users", controller.GetUsers).
 		DELETE("/user/:id", controller.DeleteUser).
-		POST("/login", controller.Login).
 		GET("/token/verify", controller.VerifyIdentity)
+	r.POST("/auth/login", controller.Login).Use(cors.New(config))
 	return r
 }
