@@ -1,10 +1,12 @@
 let tableHeaders = ["First name", "Last name", "Roles", "Actions"]
 
 const createuserboardTable = (userDiv) => {
-    var d =  document.getElementById('userTable')
+    userDiv =  document.getElementById("userboard")
+   /*  var d =  document.getElementById('userTable')
     if (d != null) {
         d.parentNode.removeChild(d)
-    }
+    } */
+    while (userDiv.firstChild) userDiv.removeChild(userDiv.firstChild) 
   
     let userboardTable = document.createElement('table') // Create the table itself
     userboardTable.className = 'table table-bordered'

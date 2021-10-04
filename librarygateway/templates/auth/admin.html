@@ -42,9 +42,36 @@
                         <input type="password" id="pass" class="form-control validate">
                         <label data-error="wrong" data-success="right" for="pass">Your password</label>
                     </div>
+                    <div class="md-form mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="consult" id="consult_role">
+                            <label class="form-check-label" for="consult_role">
+                            Consult
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="borrow" id="borrow_role">
+                            <label class="form-check-label" for="borrow_role">
+                            Borrow
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="contributor" id="contributor_role">
+                            <label class="form-check-label" for="contributor_role">
+                            Contributor
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="admnistrator" id="admnistrator_role">
+                            <label class="form-check-label" for="admnistrator_role">
+                            Administrator
+                            </label>
+                        </div>
+                    </div>
+                        
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
-                <button class="btn btn-deep-orange" onclick="addUser()">Add user</button>
+                <button class="btn btn-deep-orange" onclick="addUser();getUsers();">Add user</button>
                 </div>
             </div>
         </div>

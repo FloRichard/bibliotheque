@@ -22,6 +22,7 @@ function addUser(){
     axios(options)
     .then(response => {
         console.log(response.status);
+        $('#modalRegisterForm').modal('hide');
     })
 }
 

@@ -20,5 +20,6 @@ function handleLogForm(event){
         window.location.replace(url)
     }).catch((error) => {
         console.log("error" + error)
+        
     });
 }
