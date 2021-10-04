@@ -1,6 +1,9 @@
 package structs
 
 import (
+	"encoding/json"
+	"io"
+	"net/http"
 	"strings"
 
 	"github.com/google/uuid"
@@ -17,7 +20,7 @@ type Authorization struct {
 	Roles      []string `yaml:"roles"`
 }
 
-func (reqChecker *RequestChecker) Validate(method, path string) (Authorization, error) {
+func (reqChecker *RequestChecker) Validate(method, path, token string) (Authorization, error) {
 	path, err := handlePath(path)
 	if err != nil {
 		logger.Error("Malformed path", zap.String("Path", path))
@@ -38,6 +41,19 @@ func (reqChecker *RequestChecker) Validate(method, path string) (Authorization, 
 		return Authorization{}, err
 	}
 
+	if len(authorization.Roles) != 0 {
+		authRoles, err := getRolesFromAuth(token)
+		if err != nil {
+			logger.Error("Can't get roles", zap.Error(err))
+			return Authorization{}, err
+		}
+
+		if !validateRoles(authorization.Roles, authRoles) {
+			logger.Error("Roles not found")
+			return Authorization{}, err
+		}
+	}
+
 	return authorization, nil
 }
 
@@ -56,4 +72,47 @@ func handlePath(url string) (string, error) {
 	finalPath := strings.Join(path, "/")
 	logger.Info("joined", zap.Any("v", finalPath))
 	return finalPath, nil
+}
+
+func getRolesFromAuth(token string) ([]string, error) {
+	url := "http://localhost:8082/auth/token/verify"
+	queryParam := "?token=" + token
+	res, err := http.Get(url + queryParam)
+	if err != nil {
+		logger.Error("Can't proccess verify request", zap.Error(err))
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode != http.StatusOK {
+		logger.Error("Wring status ok", zap.String(http.StatusText(http.StatusOK), res.Status))
+		return nil, err
+	}
+
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		logger.Error("Can't read body", zap.Error(err))
+		return nil, err
+	}
+
+	roles := struct {
+		Roles []string `json:"roles"`
+	}{}
+	if err := json.Unmarshal(body, &roles); err != nil {
+		logger.Error("Can't bind body", zap.Error(err))
+		return nil, err
+	}
+
+	return roles.Roles, nil
+}
+
+func validateRoles(registeredRoles, authRoles []string) bool {
+	for _, rr := range registeredRoles {
+		for _, ar := range authRoles {
+			if strings.EqualFold(rr, ar) {
+				return true
+			}
+		}
+	}
+	return false
 }

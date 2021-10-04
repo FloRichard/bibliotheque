@@ -35,6 +35,7 @@ func Init() error {
 		logger.Error("Can't map yaml file", zap.Error(err))
 		return err
 	}
+	logger.Info("", zap.Any("", RequestChecker))
 
 	return nil
 }

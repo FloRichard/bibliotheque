@@ -4,6 +4,10 @@ authorization:
     remote_host: "http://localhost:8082"
     roles: 
       - "borrowing"
+  "/auth/login":
+    method: "POST"
+    remote_host: "http://localhost:8082"
+    roles: 
   "/auth/user/":
     method: "POST"
     remote_host: "http://localhost:8082"

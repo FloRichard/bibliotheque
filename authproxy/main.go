@@ -17,6 +17,7 @@ func main() {
 	}
 
 	r := gin.Default()
+	//r.Use(setCORSHeader())
 	//r.Use(cors.New(config))
 	if err := proxy.Init(); err != nil {
 		return
@@ -28,4 +29,12 @@ func main() {
 
 	r.Use(proxy.Auth()).Any("/")
 	r.Run(":8081")
+}
+
+func setCORSHeader() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT,DELETE")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+	}
 }
