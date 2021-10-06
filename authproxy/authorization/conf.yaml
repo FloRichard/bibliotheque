@@ -1,0 +1,20 @@
+authorization:
+  "/auth/users":
+    method: "GET"
+    remote_host: "http://usermanager:8082"
+    roles: 
+      - "administrator"
+  "/auth/login":
+    method: "POST"
+    remote_host: "http://usermanager:8082"
+    roles: 
+  "/auth/user/":
+    method: "POST"
+    remote_host: "http://usermanager:8082"
+    roles: 
+      - "administrator"
+  "/auth/user/:id":
+    method: "DELETE"
+    remote_host: "http://usermanager:8082"
+    roles: 
+      - "administrator"

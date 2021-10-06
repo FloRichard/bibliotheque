@@ -75,7 +75,7 @@ func handlePath(url string) (string, error) {
 }
 
 func getRolesFromAuth(token string) ([]string, error) {
-	url := "http://localhost:8082/auth/token/verify"
+	url := "http://usermanager:8082/auth/token/verify"
 	queryParam := "?token=" + token
 	res, err := http.Get(url + queryParam)
 	if err != nil {
@@ -109,7 +109,8 @@ func getRolesFromAuth(token string) ([]string, error) {
 func validateRoles(registeredRoles, authRoles []string) bool {
 	for _, rr := range registeredRoles {
 		for _, ar := range authRoles {
-			if strings.EqualFold(rr, ar) {
+			if rr == ar {
+				logger.Info("Permission found", zap.String("registered", rr), zap.String("retrieved", ar))
 				return true
 			}
 		}

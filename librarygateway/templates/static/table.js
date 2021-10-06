@@ -48,7 +48,9 @@ const appendUsers = (user, userIndex) => {
     LastName.innerText = user.last_name
 
     let roles = document.createElement('td')
-    roles.innerText = user.roles[0]
+    joinedRoles = user.roles.join()
+    console.log(joinedRoles)
+    roles.innerText = joinedRoles
 
     let action = document.createElement('td')
     
