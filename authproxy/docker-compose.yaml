@@ -1,0 +1,19 @@
+version: "3"
+services:
+  authproxy:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: authproxy
+    restart: always
+    ports: 
+      - 8081:8081
+    volumes:
+     - ./authorization/:/authorization
+    networks:
+      - lib_network
+
+networks:
+  lib_network:
+    name: lib_network
+ 

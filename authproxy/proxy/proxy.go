@@ -2,6 +2,7 @@ package proxy
 
 import (
 	"io/ioutil"
+	"os"
 
 	"github.com/FloRichard/bibliotheque/authproxy/structs"
 	"go.uber.org/zap"
@@ -23,8 +24,9 @@ func Init() error {
 		return err
 	}
 	defer logger.Sync()
+	os.Getenv("GOPATH")
 
-	yamlFile, err := ioutil.ReadFile("/home/frichard/go/src/github.com/FloRichard/bibliotheque/authproxy/conf.yaml")
+	yamlFile, err := ioutil.ReadFile("./authorization/conf.yaml")
 	if err != nil {
 		logger.Error("Can't read file", zap.Error(err))
 		return err
@@ -35,7 +37,7 @@ func Init() error {
 		logger.Error("Can't map yaml file", zap.Error(err))
 		return err
 	}
-	logger.Info("", zap.Any("", RequestChecker))
+	logger.Info("go path", zap.Any("", os.Getenv("GOPATH")))
 
 	return nil
 }

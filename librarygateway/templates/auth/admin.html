@@ -43,30 +43,13 @@
                         <label data-error="wrong" data-success="right" for="pass">Your password</label>
                     </div>
                     <div class="md-form mb-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="consult" id="consult_role">
-                            <label class="form-check-label" for="consult_role">
-                            Consult
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="borrow" id="borrow_role">
-                            <label class="form-check-label" for="borrow_role">
-                            Borrow
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="contributor" id="contributor_role">
-                            <label class="form-check-label" for="contributor_role">
-                            Contributor
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="admnistrator" id="admnistrator_role">
-                            <label class="form-check-label" for="admnistrator_role">
-                            Administrator
-                            </label>
-                        </div>
+                        <select class="custom-select" id="rolesSelect">
+                            <option selected>Choose...</option>
+                            <option value="consult">Consult</option>
+                            <option value="borrow,consult">Borrow</option>
+                            <option value="contributor,borrow,consult">Contributor</option>
+                            <option value="administrator,contributor,borrow,consult">Administrator</option>
+                          </select>
                     </div>
                         
                 </div>
@@ -81,7 +64,7 @@
             <h1 class="h3 mb-3">Clients</h1>
         </div>
         <div class="col">
-           <button class='btn btn-success'  data-toggle="modal" data-target="#modalRegisterForm">Add user</button>
+           <button class='btn btn-success pull-right'  data-toggle="modal" data-target="#modalRegisterForm">Add user</button>
         </div>
     </div>
     <div class="row">

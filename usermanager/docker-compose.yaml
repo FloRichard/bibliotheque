@@ -10,6 +10,10 @@ services:
       - auth_db
     ports: 
       - 8082:8082
+    networks:
+      - lib_network
+
+
   auth_db:
     image: mongo
     restart: always
@@ -23,6 +27,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: root
       MONGO_USERNAME: user
       MONGO_PASSWORD: secret
+    networks:
+      - lib_network
 
   mongo_seed:
     image: mongo
@@ -36,4 +42,9 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: root
     command:
       /mongoseed/import.sh
+    networks:
+      - lib_network
     
+networks:
+  lib_network:
+    name: lib_network

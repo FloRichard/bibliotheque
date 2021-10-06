@@ -1,0 +1,18 @@
+version: "3"
+services:
+  librarygateway:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: librarygateway
+    restart: always
+    ports: 
+      - 8080:8080
+    volumes:
+      - ./templates/:/templates
+    networks:
+      - lib_network
+
+networks:
+  lib_network:
+    name: lib_network

@@ -1,6 +1,8 @@
 function addUser(){
+    let roleArray = document.getElementById("rolesSelect").value.split(',')
+    console.log(roleArray)
     options = {
-        url: 'http://' + window.location.hostname + ':8081/auth/user/',
+        url: 'http://'+window.location.hostname+':8081/auth/user/',
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -12,10 +14,7 @@ function addUser(){
             last_name: document.getElementById("lastName").value,
             login: document.getElementById("pass").value,
             pwd:document.getElementById("firstName").value,
-            roles: [
-                "oui",
-                "non"
-            ]
+            roles: roleArray
         }
     };
 

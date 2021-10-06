@@ -26,6 +26,7 @@ func Auth() gin.HandlerFunc {
 
 		authorization, err := RequestChecker.Validate(c.Request.Method, c.Request.URL.Path, authHeader)
 		if err != nil {
+			setCORSHeader(c)
 			c.AbortWithStatusJSON(http.StatusUnauthorized, "Malformed path or method")
 			return
 		}
