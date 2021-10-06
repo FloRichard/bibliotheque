@@ -1,0 +1,16 @@
+version: "3"
+services:
+  librarymanager:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: librarymanager
+    restart: always
+    ports: 
+      - 8083:8083
+    networks:
+      - lib_network
+    
+networks:
+  lib_network:
+    name: lib_network
