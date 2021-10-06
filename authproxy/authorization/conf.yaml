@@ -18,3 +18,30 @@ authorization:
     remote_host: "http://usermanager:8082"
     roles: 
       - "administrator"
+
+  ##CHECK POUR LES QUERY PARAMS
+  "/book/":
+    method: "GET"
+    remote_host: "http://librarymanager:8082"
+    roles: 
+      - "administrator"
+  "/book/":
+    method: "POST"
+    remote_host: "http://librarymanager:8082"
+    roles: 
+      - "administrator"
+  "/book/":
+    method: "PUT"
+    remote_host: "http://librarymanager:8082"
+    roles: 
+      - "administrator" 
+  "/book/:id":
+    method: "GET"
+    remote_host: "http://librarymanager:8082"
+    roles: 
+      - "administrator"
+  "/book/:id":
+    method: "DELETE"
+    remote_host: "http://librarymanager:8082"
+    roles: 
+      - "administrator"
