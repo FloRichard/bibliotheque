@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
+	"strings"
 
 	"github.com/FloRichard/bibliotheque/authproxy/structs"
 	"github.com/gin-gonic/gin"
@@ -30,9 +31,10 @@ func Auth() gin.HandlerFunc {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, "Malformed path or method")
 			return
 		}
-
+		logger.Info("query param", zap.Any("", c.Request.URL.Query()))
 		proxy, err := newProxy(c, authorization)
 		if err != nil {
+			logger.Error("Can't create proxy", zap.Error(err))
 			c.AbortWithStatusJSON(http.StatusInternalServerError, "")
 			return
 		}
@@ -63,6 +65,15 @@ func newProxy(c *gin.Context, auth structs.Authorization) (*httputil.ReverseProx
 		req.Body = c.Request.Body
 		req.URL.Path = c.Request.URL.Path
 		req.Method = c.Request.Method
+
+		for key, value := range c.Request.URL.Query() {
+			req.URL.Query().Set(key, strings.Join(value, ""))
+		}
+
+		logger.Info("query param prxy", zap.Any("", req.URL.Query()))
+		logger.Info("query param prxy", zap.Any("url", req.URL))
+		//query, _ := url.ParseQuery(c.Request.URL.RawQuery)
+
 	}
 	proxy.ModifyResponse = func(res *http.Response) error {
 		res.Header.Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT,DELETE")
