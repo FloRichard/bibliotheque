@@ -7,8 +7,8 @@ import (
 
 func main() {
 	r := gin.Default()
-	r.LoadHTMLGlob("./templates/**/*")
-	r.Static("/static", "./templates/static")
+	r.LoadHTMLGlob("./templates/html/**/*")
+	r.Static("/static/auth", "./templates/static/auth")
 
 	r.Group("/auth").
 		GET("/admin", handler.GetAdminView).

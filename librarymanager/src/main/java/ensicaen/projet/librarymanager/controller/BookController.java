@@ -19,11 +19,6 @@ public class BookController {
     @Autowired
     private BookService bookService = new BookService();
 
-    @GetMapping("/")
-    public Collection<BookEntity> get(){
-        return bookService.list();
-    }
-
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BookEntity> add(@RequestBody BookEntityDTO book){
         BookEntity a = bookService.add(book.getTitle(), book.getPublicationYear(), book.getDescription(), 0, book.getIdPublisher(), book.getIdAuthors());
@@ -39,6 +34,7 @@ public class BookController {
     @GetMapping(value = "/",  produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection<BookEntity> getByTitle(@RequestParam(required = false) String byTitle){
         if(byTitle!=null && !byTitle.isEmpty()) {
+            System.out.println("HEHO LAAAA");
             return bookService.getByTitle(byTitle);
         }
         else {
