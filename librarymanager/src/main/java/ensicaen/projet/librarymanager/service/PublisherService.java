@@ -1,5 +1,6 @@
 package ensicaen.projet.librarymanager.service;
 
+import ensicaen.projet.librarymanager.entity.BookEntity;
 import ensicaen.projet.librarymanager.entity.PublisherEntity;
 import ensicaen.projet.librarymanager.repository.PublisherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,10 @@ public class PublisherService {
     public void update(PublisherEntity a, String name){
         a.setName(name);
         pubRepo.save(a);
+    }
+
+    public Collection<BookEntity> getBooks(Long id){
+        return pubRepo.getBooksFromPublisher(id);
     }
 
 }

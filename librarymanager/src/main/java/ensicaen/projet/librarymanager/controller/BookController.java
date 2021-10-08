@@ -46,7 +46,7 @@ public class BookController {
     public ResponseEntity<Object> update(@RequestBody BookEntityDTO book){
         Optional<BookEntity> t = bookService.get(book.getIdBook());
         if (t.isPresent()) {
-            bookService.update(t.get(), book.getTitle(), book.getDescription(), book.getPublicationYear());
+            bookService.update(t.get(), book.getTitle(), book.getDescription(), book.getPublicationYear(), book.getState());
             return ResponseEntity.status(HttpStatus.OK).body("Book with id : " + book.getIdBook() +" successfully updated");
         }
         else {

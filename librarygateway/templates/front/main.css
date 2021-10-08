@@ -1,0 +1,15 @@
+h1{
+	 text-align: center;
+	 margin: 1em
+}
+th{
+	text-align: center;
+	padding-top:1em;
+}
+td{
+	padding:1em;
+	text-align: center;
+}
+.admin{
+	visibility:hidden;
+}
