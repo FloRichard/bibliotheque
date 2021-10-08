@@ -2,20 +2,47 @@ window.onload = function() {
   let params = (new URL(document.location)).searchParams;
   if(params.has("idAuthor")){
     $('#bookDataTable').empty();
-    axios.get('http://localhost:8081/author/'+params.get('idAuthor')+'/books')
+    options = {
+      url: 'http://localhost:8081/author/'+params.get('idAuthor')+'/books',
+      method: 'GET',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': sessionStorage.getItem('token')
+      }
+    }
+    axios(options)
       .then(response => {
         buildHtmlTable(response.data, '#bookDataTable')
     });
   }
   else if(params.has("idPublisher")){
     $('#bookDataTable').empty();
-    axios.get('http://localhost:8081/publisher/'+params.get('idPublisher')+'/books')
+    options = {
+      url: 'http://localhost:8081/publisher/'+params.get('idPublisher')+'/books',
+      method: 'GET',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': sessionStorage.getItem('token')
+      }
+    }
+    axios(options)
       .then(response => {
         buildHtmlTable(response.data, '#bookDataTable')
     });
   }
   else{
-    axios.get('http://localhost:8081/book/')
+    options = {
+      url: 'http://localhost:8081/book/',
+      method: 'GET',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': sessionStorage.getItem('token')
+      }
+    }
+    axios(options)
       .then(response => {
         buildHtmlTable(response.data, '#bookDataTable')
       });
@@ -95,14 +122,32 @@ function getAllColumnHeaders(myJson) {
 function sendSearchByTitle(){
   var title = $('#byTitle').val();
   $('#bookDataTable').empty();
-  axios.get('http://localhost:8081/book/?byTitle='+title)
+  options = {
+    url: 'http://localhost:8081/book/?byTitle='+title,
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Authorization': sessionStorage.getItem('token')
+    }
+  }
+  axios(options)
     .then(response => {
       buildHtmlTable(response.data, '#bookDataTable')
     });
 }
 
 function fillSelectAuthors(){
-  axios.get('http://localhost:8081/author/')
+  options = {
+    url: 'http://localhost:8081/author/',
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Authorization': sessionStorage.getItem('token')
+    }
+  }
+  axios(options)
     .then(response => {
       var columns = []
       columns.push('idAuthor')
