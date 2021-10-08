@@ -78,7 +78,7 @@ public class PublisherController {
     public ResponseEntity<Object> getBooks(@PathVariable String id){
         Optional<PublisherEntity> publisher = pubService.get(Long.parseLong(id));
         if(publisher.isPresent()) {
-            return new ResponseEntity<>(publisher.get().getBooks(),HttpStatus.OK);
+            return new ResponseEntity<>(pubService.getBooks(Long.parseLong(id)),HttpStatus.OK);
         }
         else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
