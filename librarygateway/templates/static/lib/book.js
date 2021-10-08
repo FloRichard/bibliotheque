@@ -160,7 +160,16 @@ function fillSelectAuthors(){
 }
 
 function fillSelectPublishers(){
-  axios.get('http://localhost:8081/publisher/')
+  options = {
+    url: 'http://localhost:8081/publisher/',
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Authorization': sessionStorage.getItem('token')
+    }
+  }
+  axios(options)
     .then(response => {
       var columns = []
       columns.push('idPublisher')
@@ -208,7 +217,16 @@ function deleteBook(event){
   var value = row.childNodes[0].value;
   var r = confirm("Voulez-vous vraiment supprimer ce livre ?");
   if(r == true){
-    axios.delete('http://localhost:8081/book/'+value)
+    options = {
+      url: 'http://localhost:8081/book/'+value,
+      method: 'DELETE',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': sessionStorage.getItem('token')
+      }
+    }
+    axios(options)
       .then(response => {
         window.alert("Livre supprimé avec succès");
         location.reload();
