@@ -13,6 +13,8 @@ Pour pouvoir utiliser notre application vous devez disposer des logiciels suivan
  
  Pour récupérer le projet il faut cloner le dépôt Git sur votre machine.
  Cliquez [ici](https://github.com/FloRichard/bibliotheque) pour accèder au dépôt. Il est en accès libre.
+ 
+ Aucun SGBD est nécessaire, tout est conteneurisé dans des conteneurs Docker.
 
  
 ## Deployer les services
