@@ -9,16 +9,16 @@
     </head>
 
     <form id="logForm" action="http://localhost:8081/auth/login" method="POST" onsubmit="handleLogForm(document.forms['logForm']);">
-        <div class="form-group">
-            <label for="login">Login</label>
+        <div class="form-group" style="margin:auto;width:40%">
+            <label style="margin-top:1em;margin-bottom:1em" for="login">Login</label>
             <input type="text" class="form-control" id="login" name="login" aria-describedby="loginHelp" placeholder="Enter your login">
             <small id="loginHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
-        <div class="form-group">
-            <label for="password">Password</label>
+        <div class="form-group" style="margin:auto;width:40%">
+            <label style="margin-top:1em;margin-bottom:1em" for="password">Password</label>
             <input type="password" class="form-control" id="password" name="password" placeholder="Password">
         </div>
-        <button type="submit" class="btn btn-primary">Log in</button>
+        <button style="margin-left:30%;margin-top:2em;" type="submit" class="btn btn-primary">Log in</button>
     </form>
 </html>
 
