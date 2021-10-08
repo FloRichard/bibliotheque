@@ -8,6 +8,11 @@ authorization:
     "POST":
       remote_host: "http://usermanager:8082"
       roles: 
+  "/auth/logout":
+    "GET":
+      remote_host: "http://usermanager:8082"
+      roles: 
+        - "consult"
   "/auth/user/":
     "POST":
       remote_host: "http://usermanager:8082"
@@ -93,3 +98,9 @@ authorization:
       remote_host: "http://librarymanager:8083"
       roles: 
         - "contributor"
+        
+  "/publisher/:id/books":
+    "GET":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "consult"
