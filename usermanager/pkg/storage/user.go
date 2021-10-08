@@ -58,6 +58,26 @@ func Login(login, password string) (structs.User, error) {
 	return u, nil
 }
 
+func UpdateUser(u structs.User) error {
+	searchFilter := bson.D{
+		{Key: "id", Value: u.UUID},
+	}
+
+	update := bson.D{
+		{Key: "$set", Value: bson.D{
+			{Key: "first_name", Value: u.FirstName},
+			{Key: "last_name", Value: u.LastName},
+			{Key: "roles", Value: u.Roles},
+		}},
+	}
+	_, err := collection.UpdateOne(context.TODO(), searchFilter, update)
+	if err != nil {
+		logger.Error("Can't empty token value", zap.Error(err))
+		return err
+	}
+	return nil
+}
+
 func Logout(token string) error {
 	searchFilter := bson.D{
 		{Key: "token", Value: token},

@@ -40,6 +40,30 @@ func AddUser(c *gin.Context) {
 	c.JSON(http.StatusCreated, "User created")
 }
 
+func UpdateUser(c *gin.Context) {
+	b, err := io.ReadAll(c.Request.Body)
+	if err != nil {
+		logger.Error("Can't read request body", zap.Error(err))
+		c.JSON(http.StatusBadRequest, "Invalid request")
+		return
+	}
+
+	u := structs.User{}
+	if err := json.Unmarshal(b, &u); err != nil {
+		logger.Error("Can't bind body", zap.Error(err))
+		c.JSON(http.StatusBadRequest, "Invalid request")
+		return
+	}
+
+	if err := storage.UpdateUser(u); err != nil {
+		logger.Error("Can't add user", zap.Error(err))
+		c.JSON(http.StatusBadRequest, "Invalid user")
+		return
+	}
+
+	c.JSON(http.StatusCreated, "User updated")
+}
+
 func DeleteUser(c *gin.Context) {
 	rawID := c.Param("id")
 	uid, err := uuid.Parse(rawID)

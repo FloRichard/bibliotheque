@@ -22,10 +22,12 @@ func Init() *gin.Engine {
 
 	r.Group("/auth").
 		POST("/user/", controller.AddUser).
+		PUT("/user/", controller.UpdateUser).
 		GET("/users", controller.GetUsers).
 		DELETE("/user/:id", controller.DeleteUser).
 		GET("/token/verify", controller.VerifyIdentity).
 		GET("/logout", controller.Logout)
+		
 	r.POST("/auth/login", controller.Login).Use(cors.New(config))
 	return r
 }
