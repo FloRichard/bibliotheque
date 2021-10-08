@@ -12,6 +12,8 @@
          <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
          <script type="text/javascript" src="/static/auth/admin.js"></script>
     </head>
+    <body>
+	<button style="margin: 2em" class="btn btn-secondary" onclick="window.location.replace('http://localhost:8080/library/');">Retour à l'accueil</button>
     <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -60,16 +62,12 @@
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <h1 class="h3 mb-3">Clients</h1>
-        </div>
-        <div class="col">
-           <button class='btn btn-success pull-right'  data-toggle="modal" data-target="#modalRegisterForm">Add user</button>
-        </div>
+        <button class='btn btn-success'  data-toggle="modal" data-target="#modalRegisterForm">Add user</button>   
     </div>
     <div class="row">
         <div id="userboard"></div>
     </div>
+    </body>
 </html>
 <script type="text/javascript" src="/static/auth/table.js"></script> 
 <script type="text/javascript">window.onload=getUsers()</script>
