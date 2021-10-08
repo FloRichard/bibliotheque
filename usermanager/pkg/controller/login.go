@@ -50,11 +50,13 @@ func Login(c *gin.Context) {
 	user.Token = token
 
 	responseBody := struct {
-		Id    string `json:"id"`
-		Token string `json:"token"`
+		Id    string   `json:"id"`
+		Token string   `json:"token"`
+		Roles []string `json:"roles"`
 	}{
 		Id:    user.UUID,
 		Token: user.Token,
+		Roles: user.Roles,
 	}
 
 	c.JSON(http.StatusOK, responseBody)

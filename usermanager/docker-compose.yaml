@@ -30,20 +30,14 @@ services:
     networks:
       - lib_network
 
-  mongo_seed:
+  mongoseed:
     image: mongo
-    container_name: mongo_seed
-    links:
+    depends_on:
       - auth_db
+    restart: "no"
     volumes:
-      - ./database/mongoseed:/mongoseed
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
-    command:
-      /mongoseed/import.sh
-    networks:
-      - lib_network
+      - ./database/mongoseed/:/mongoseed/
+  #  entrypoint: [ "bash", "-c", "sleep 10 && mongo --host mongo:27017 --eval 'rs.initiate()'"]      
     
 networks:
   lib_network:
