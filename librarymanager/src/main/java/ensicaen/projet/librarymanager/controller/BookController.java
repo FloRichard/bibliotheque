@@ -34,6 +34,7 @@ public class BookController {
     @GetMapping(value = "/",  produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection<BookEntity> getByTitle(@RequestParam(required = false) String byTitle){
         if(byTitle!=null && !byTitle.isEmpty()) {
+            System.out.println("HEHO LAAAA");
             return bookService.getByTitle(byTitle);
         }
         else {

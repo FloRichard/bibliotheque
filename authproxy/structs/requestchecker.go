@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/google/uuid"
@@ -11,33 +12,32 @@ import (
 )
 
 type RequestChecker struct {
-	Authorization map[string]Authorization `yaml:"authorization"`
+	Authorization map[string]map[string]Authorization `yaml:"authorization"`
 }
 
 type Authorization struct {
-	Method     string   `yaml:"method"`
+	//Method     string   `yaml:"method"`
 	RemoteHost string   `yaml:"remote_host"`
 	Roles      []string `yaml:"roles"`
 }
 
 func (reqChecker *RequestChecker) Validate(method, path, token string) (Authorization, error) {
+	logger.Info("Full path", zap.String("url", path))
 	path, err := handlePath(path)
 	if err != nil {
 		logger.Error("Malformed path", zap.String("Path", path))
 		return Authorization{}, err
 	}
 
-	authorization, ok := reqChecker.Authorization[path]
+	authorizations, ok := reqChecker.Authorization[path]
 	if !ok {
 		logger.Error("unknown path", zap.String("Path", path))
 		return Authorization{}, err
 	}
 
-	if method != authorization.Method {
-		logger.Error("unknown method",
-			zap.String("received", method),
-			zap.String("registered", authorization.Method),
-		)
+	authorization, ok := authorizations[method]
+	if !ok {
+		logger.Error("unknown method", zap.String("received", method))
 		return Authorization{}, err
 	}
 
@@ -65,11 +65,23 @@ func handlePath(url string) (string, error) {
 		if err == nil {
 			path = append(path, ":id")
 		} else {
-			path = append(path, frag)
+			_, err := strconv.ParseInt(frag, 10, 64)
+			if err == nil {
+				path = append(path, ":id")
+			} else {
+				path = append(path, frag)
+			}
 		}
 	}
+	finalPath := ""
+	/* 	queryParams := strings.Split(url, "?")
+	   	logger.Info("query params", zap.Any("v", queryParams))
+	   	if len(queryParams) > 0 { */
+	//	finalPath = strings.Join(path, "/") + "?" + queryParams[1]
+	//} else {
+	finalPath = strings.Join(path, "/")
+	//}
 
-	finalPath := strings.Join(path, "/")
 	logger.Info("joined", zap.Any("v", finalPath))
 	return finalPath, nil
 }

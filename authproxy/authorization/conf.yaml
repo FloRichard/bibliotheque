@@ -1,20 +1,95 @@
 authorization:
   "/auth/users":
-    method: "GET"
-    remote_host: "http://usermanager:8082"
-    roles: 
-      - "administrator"
+    "GET":
+      remote_host: "http://usermanager:8082"
+      roles: 
+        - "administrator"
   "/auth/login":
-    method: "POST"
-    remote_host: "http://usermanager:8082"
-    roles: 
+    "POST":
+      remote_host: "http://usermanager:8082"
+      roles: 
   "/auth/user/":
-    method: "POST"
-    remote_host: "http://usermanager:8082"
-    roles: 
-      - "administrator"
+    "POST":
+      remote_host: "http://usermanager:8082"
+      roles: 
+        - "administrator"
   "/auth/user/:id":
-    method: "DELETE"
-    remote_host: "http://usermanager:8082"
-    roles: 
-      - "administrator"
+    "DELETE":
+      remote_host: "http://usermanager:8082"
+      roles: 
+        - "administrator"
+
+  "/book/":
+    "GET":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "consult"
+    "POST":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "contributor"
+    "PUT":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "contributor" 
+  "/book/:id":
+    "GET":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "consult"
+    "DELETE":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "contributor"
+  
+  "/author/":
+    "GET":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "consult"
+    "POST":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "contributor"
+    "PUT":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "contributor"
+
+  "/author/:id":
+    "GET":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "consult"
+    "DELETE":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "contributor"
+  "/author/:id/books":
+    "GET":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "consult"
+
+  "/publisher/":
+    "GET":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "consult"
+    "POST":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "contributor"
+    "PUT":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "contributor" 
+  "/publisher/:id":
+    "GET":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "consult"
+    "DELETE":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "contributor"

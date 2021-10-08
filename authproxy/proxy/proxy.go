@@ -37,7 +37,7 @@ func Init() error {
 		logger.Error("Can't map yaml file", zap.Error(err))
 		return err
 	}
-	logger.Info("go path", zap.Any("", os.Getenv("GOPATH")))
+	logger.Info("go path", zap.Any("", RequestChecker))
 
 	return nil
 }
