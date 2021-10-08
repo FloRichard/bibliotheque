@@ -7,12 +7,15 @@
 	<title>Gestion des livres</title>
 </head>
 <body>
-	<button style="margin: 2em" class="btn btn-secondary" onclick="window.location.replace('http://localhost:8080/library/');">Retour à l'accueil</button>
+	<div>
+		<button style="margin: 2em" class="btn btn-secondary" onclick="window.location.replace('http://localhost:8080/library/');">Retour à l'accueil</button>
+		<button style="float: right;margin:2em;" class="btn btn-secondary" onclick="logout();">Se deconnecter</button>
+	</div>
 	<h1>Gestion des livres</h1>
 	<div class="input-group" style="margin:auto;width:50%;margin-bottom: 2em;">
 	  <input id="byTitle" type="search" class="form-control rounded" placeholder="Rechercher par titre" aria-label="Search"
 	    aria-describedby="search-addon" onkeyup="sendSearchByTitle()"/>
-	  <button type="button" class="btn btn-success" style="margin-left:1em" onclick="$('#addBook').modal({'backdrop': 'static'});">Ajouter un Livre</button>
+	  <button type="button" class="btn btn-success" id="addBookBtn" style="margin-left:1em" onclick="$('#addBook').modal({'backdrop': 'static'});">Ajouter un Livre</button>
 	</div>
 	<table style="width:90%;margin:auto;margin-bottom: 3em;" class="table" id="bookDataTable" border="1">
 		
@@ -83,5 +86,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 	<script src="/static/lib/book.js"></script>
+	<script type="text/javascript" src="/static/auth/admin.js"></script>
 </body>
 </html>

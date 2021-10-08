@@ -1,4 +1,7 @@
 window.onload = function() {
+  if (!sessionStorage.getItem('roles').includes('contributor')) {
+    document.getElementById("addBookBtn").disabled = true;
+  }
   let params = (new URL(document.location)).searchParams;
   if(params.has("idAuthor")){
     $('#bookDataTable').empty();

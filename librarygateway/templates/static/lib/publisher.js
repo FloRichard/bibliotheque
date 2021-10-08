@@ -1,4 +1,7 @@
 window.onload = function() {
+  if (!sessionStorage.getItem('roles').includes('contributor')) {
+    document.getElementById("addPublisherBtn").disabled = true;
+  }
   options = {
     url: 'http://localhost:8081/publisher/',
     method: 'GET',

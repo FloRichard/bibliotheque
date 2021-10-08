@@ -41,3 +41,24 @@ function deleteUser(userID){
         console.log(response.status);
     })
 }
+
+function logout(){
+    let token = sessionStorage.getItem('token')
+    options = {
+        url: 'http://' + window.location.hostname + ':8081/auth/logout?token='+token,
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Authorization': sessionStorage.getItem('token')
+        },
+    };
+
+    axios(options)
+    .then(response => {
+        console.log(response.status);
+        sessionStorage.clear()
+        const url='http://localhost:8080/auth/login';
+        window.location.replace(url)
+    })
+}

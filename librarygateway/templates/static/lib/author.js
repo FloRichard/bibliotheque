@@ -1,4 +1,8 @@
 window.onload = function() {
+  if (!sessionStorage.getItem('roles').includes('contributor')) {
+    document.getElementById("addAuthorBtn").disabled = true;
+  }
+
   options = {
     url: 'http://localhost:8081/author/',
     method: 'GET',
