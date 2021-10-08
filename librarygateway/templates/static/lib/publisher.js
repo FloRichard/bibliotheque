@@ -171,5 +171,6 @@ function submitPublisherUpdate(){
 function getBooksFromPublisher(event){
   var row = event.target.parentNode.parentNode;
   value = row.childNodes[0].value;
-  document.location.href='../book/book.html?idPublisher='+value;
+  window.location.replace('http://localhost:8080/library/book/?idPublisher='+value)
+  //document.location.href='../book/book.html?idPublisher='+value;
 }
