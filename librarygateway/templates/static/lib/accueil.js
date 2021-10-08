@@ -1,11 +1,14 @@
 window.onload = function() {
+	checkConnection()
 	let rawRoles  = sessionStorage.getItem('roles')
-	let roles = rawRoles.split(',')
-	if (roles.includes('administrator')){
-		showAdmin()
-	}else{
-		deleteAdmin()
+	if(rawRoles) {
+		let roles = rawRoles.split(',')
+		if (roles.includes('administrator')){
+			showAdmin()
+			return
+		}
 	}
+	deleteAdmin()
 };
 
 function deleteAdmin(){

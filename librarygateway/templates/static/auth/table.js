@@ -11,6 +11,7 @@ const createuserboardTable = (userDiv) => {
     let userboardTable = document.createElement('table') // Create the table itself
     userboardTable.className = 'table table-bordered'
     userboardTable.id = 'userTable'
+    userboardTable.style ='margin: 2em;'
 
     let userboardTableHead = document.createElement('thead') // Creates the table header group element
    
