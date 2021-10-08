@@ -14,6 +14,7 @@ var (
 	collection  *mongo.Collection
 	logger      *zap.Logger
 	defaultUser = structs.User{
+		UUID:      "12348490-2643-4143-bd8a-4b3460ee2653",
 		FirstName: "Florian",
 		LastName:  "Richard",
 		Login:     "admin",
