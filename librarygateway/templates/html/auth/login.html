@@ -10,15 +10,14 @@
 
     <form id="logForm" action="http://localhost:8081/auth/login" method="POST" onsubmit="handleLogForm(document.forms['logForm']);">
         <div class="form-group" style="margin:auto;width:40%">
-            <label style="margin-top:1em;margin-bottom:1em" for="login">Login</label>
-            <input type="text" class="form-control" id="login" name="login" aria-describedby="loginHelp" placeholder="Enter your login">
-            <small id="loginHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            <label style="margin-top:1em;margin-bottom:1em" for="login">Identifiant</label>
+            <input type="text" class="form-control" id="login" name="login" aria-describedby="loginHelp" placeholder="Entrez votre identifiant">
         </div>
         <div class="form-group" style="margin:auto;width:40%">
-            <label style="margin-top:1em;margin-bottom:1em" for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            <label style="margin-top:1em;margin-bottom:1em" for="password">Mot de passe</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Entrez votre mot de passe">
         </div>
-        <button style="margin-left:30%;margin-top:2em;" type="submit" class="btn btn-primary">Log in</button>
+        <button style="margin-left:30%;margin-top:2em;" type="submit" class="btn btn-primary">Se connecter</button>
     </form>
 </html>
 

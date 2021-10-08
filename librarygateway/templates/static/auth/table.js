@@ -66,7 +66,7 @@ const appendUsers = (user, userIndex) => {
 
     var modifyBtn = document.createElement('button');
     modifyBtn.type = 'button';
-    modifyBtn.className = 'btn btn-success';
+    modifyBtn.className = 'btn btn-primary';
     modifyBtn.id = user.id
     modifyBtn.textContent = 'Modifier';
     //deleteBtn.onclick = (function(entry) {return function() {chooseUser(entry);}})(entry);
