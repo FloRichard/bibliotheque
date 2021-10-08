@@ -1,5 +1,11 @@
 window.onload = function() {
-	deleteAdmin()
+	let rawRoles  = sessionStorage.getItem('roles')
+	let roles = rawRoles.split(',')
+	if (roles.includes('administrator')){
+		showAdmin()
+	}else{
+		deleteAdmin()
+	}
 };
 
 function deleteAdmin(){

@@ -13,6 +13,7 @@ function handleLogForm(event){
         resp.json().then((responseBody) => {
             sessionStorage.setItem("id",responseBody.id)
             sessionStorage.setItem("token", responseBody.token)
+            sessionStorage.setItem("roles",responseBody.roles)
             console.log("body retrieved : ", responseBody)
         })
 
