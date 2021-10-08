@@ -58,6 +58,18 @@ func Login(login, password string) (structs.User, error) {
 	return u, nil
 }
 
+func Logout(token string) error {
+	searchFilter := bson.D{
+		{Key: "token", Value: token},
+	}
+
+	update := bson.D{
+		{"$set", bson.D{{Key: "token", Value: "token"}}},
+	}
+	collection.UpdateOne(context.TODO(), searchFilter, update)
+
+}
+
 func AddToken(token, id string) error {
 	searchFilter := bson.D{{Key: "id", Value: id}}
 	updateFilter := bson.D{{Key: "$set", Value: bson.D{{Key: "token", Value: token}}}}

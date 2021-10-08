@@ -68,3 +68,12 @@ func generateToken(l int) string {
 	str := base64.RawURLEncoding.EncodeToString(buff)
 	return str[:l] // strip 1 extra character we get from odd length results
 }
+
+func Logout(c *gin.Context) {
+	t, ok := c.GetQuery("token")
+	if !ok {
+		logger.Error("Can't find token query param")
+		c.JSON(http.StatusBadRequest, "Wrong request")
+		return
+	}
+}
