@@ -1,4 +1,4 @@
-let tableHeaders = ["First name", "Last name", "Roles", "Actions"]
+let tableHeaders = ["Prénom", "Nom", "Rôles", "Actions"]
 
 const createuserboardTable = (userDiv) => {
     userDiv =  document.getElementById("userboard")
@@ -11,7 +11,7 @@ const createuserboardTable = (userDiv) => {
     let userboardTable = document.createElement('table') // Create the table itself
     userboardTable.className = 'table table-bordered'
     userboardTable.id = 'userTable'
-    userboardTable.style ='margin: 2em;'
+    userboardTable.style ='margin: 2em;text-align:center;'
 
     let userboardTableHead = document.createElement('thead') // Creates the table header group element
    
@@ -58,7 +58,8 @@ const appendUsers = (user, userIndex) => {
     var deleteBtn = document.createElement('button');
     deleteBtn.type = 'button';
     deleteBtn.className = 'btn btn-danger';
-    deleteBtn.textContent = 'delete';
+    deleteBtn.textContent = 'Supprimer';
+    deleteBtn.style = 'margin-right:1em';
    // deleteBtn.id = 
     deleteBtn.onclick = function(){deleteUser(user.id); getUsers()};
     action.appendChild(deleteBtn);
@@ -67,7 +68,7 @@ const appendUsers = (user, userIndex) => {
     modifyBtn.type = 'button';
     modifyBtn.className = 'btn btn-success';
     modifyBtn.id = user.id
-    modifyBtn.textContent = 'modify';
+    modifyBtn.textContent = 'Modifier';
     //deleteBtn.onclick = (function(entry) {return function() {chooseUser(entry);}})(entry);
     action.appendChild(modifyBtn);
 
