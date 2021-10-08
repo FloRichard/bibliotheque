@@ -25,10 +25,18 @@ function buildHtmlTable(myJson,selector) {
     for (var j = 0; j<columns.length+2; j++){
       var cellValue = myJson[i][columns[j]];
       if(cellValue == null) {
-        if(columns[j] == 'modify')
-          row$.append($('<td/>').html('<button class="btn btn-primary" onclick="storeUpdateId(event);">Modifier</button>'))
-        if(columns[j] == 'delete')
-          row$.append($('<td/>').html('<button class="btn btn-danger" onclick="deletePublisher(event);">Supprimer</button>'))
+        if(columns[j] == 'modify'){
+          if(sessionStorage.getItem('roles').includes('contributor') || sessionStorage.getItem('roles').includes('administrator'))
+            row$.append($('<td/>').html('<button class="btn btn-primary" onclick="storeUpdateId(event);">Modifier</button>'))
+          else
+            row$.append($('<td/>').html('<button class="btn btn-primary" disabled>Modifier</button>'))
+        }
+        if(columns[j] == 'delete'){
+          if(sessionStorage.getItem('roles').includes('contributor') || sessionStorage.getItem('roles').includes('administrator'))
+            row$.append($('<td/>').html('<button class="btn btn-danger" onclick="deletePublisher(event);">Supprimer</button>'))
+          else
+            row$.append($('<td/>').html('<button class="btn btn-danger" disabled>Supprimer</button>'))
+        }
       }
 
       else if(columns[j] == 'idPublisher') {
