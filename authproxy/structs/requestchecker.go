@@ -16,13 +16,11 @@ type RequestChecker struct {
 }
 
 type Authorization struct {
-	//Method     string   `yaml:"method"`
 	RemoteHost string   `yaml:"remote_host"`
 	Roles      []string `yaml:"roles"`
 }
 
 func (reqChecker *RequestChecker) Validate(method, path, token string) (Authorization, error) {
-	logger.Info("Full path", zap.String("url", path))
 	path, err := handlePath(path)
 	if err != nil {
 		logger.Error("Malformed path", zap.String("Path", path))
@@ -73,16 +71,7 @@ func handlePath(url string) (string, error) {
 			}
 		}
 	}
-	finalPath := ""
-	/* 	queryParams := strings.Split(url, "?")
-	   	logger.Info("query params", zap.Any("v", queryParams))
-	   	if len(queryParams) > 0 { */
-	//	finalPath = strings.Join(path, "/") + "?" + queryParams[1]
-	//} else {
-	finalPath = strings.Join(path, "/")
-	//}
-
-	logger.Info("joined", zap.Any("v", finalPath))
+	finalPath := strings.Join(path, "/")
 	return finalPath, nil
 }
 
@@ -110,6 +99,7 @@ func getRolesFromAuth(token string) ([]string, error) {
 	roles := struct {
 		Roles []string `json:"roles"`
 	}{}
+
 	if err := json.Unmarshal(body, &roles); err != nil {
 		logger.Error("Can't bind body", zap.Error(err))
 		return nil, err
