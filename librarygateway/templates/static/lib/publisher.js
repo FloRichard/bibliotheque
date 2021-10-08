@@ -1,5 +1,14 @@
 window.onload = function() {
-  axios.get('http://localhost:8081/publisher/')
+  options = {
+    url: 'http://localhost:8081/publisher/',
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Authorization': sessionStorage.getItem('token')
+    }
+  }
+  axios(options)
     .then(response => {
       buildHtmlTable(response.data, '#publisherDataTable')
     });
@@ -52,7 +61,16 @@ function getAllColumnHeaders(myJson) {
 function sendSearchByName(){
   var name = $('#byName').val();
   $('#publisherDataTable').empty();
-  axios.get('http://localhost:8081/publisher/?byName='+name)
+  options = {
+    url: 'http://localhost:8081/publisher/?byName='+name,
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Authorization': sessionStorage.getItem('token')
+    }
+  }
+  axios(options)
     .then(response => {
       buildHtmlTable(response.data, '#publisherDataTable')
     });
@@ -86,7 +104,16 @@ function deletePublisher(event){
   var value = row.childNodes[0].value;
   var r = confirm("Voulez-vous vraiment supprimer cet auteur ?");
   if(r == true){
-    axios.delete('http://localhost:8081/publisher/'+value)
+    options = {
+      url: 'http://localhost:8081/publisher/'+value,
+      method: 'DELETE',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': sessionStorage.getItem('token')
+      }
+    }
+    axios(options)
       .then(response => {
         window.alert("Éditeur supprimé avec succès");
         location.reload();
