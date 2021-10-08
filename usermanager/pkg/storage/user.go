@@ -66,7 +66,12 @@ func Logout(token string) error {
 	update := bson.D{
 		{"$set", bson.D{{Key: "token", Value: "token"}}},
 	}
-	collection.UpdateOne(context.TODO(), searchFilter, update)
+	_, err := collection.UpdateOne(context.TODO(), searchFilter, update)
+	if err != nil {
+		logger.Error("Can't empty token value", zap.Error(err))
+		return err
+	}
+	return nil
 
 }
 

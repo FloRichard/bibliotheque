@@ -76,4 +76,12 @@ func Logout(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, "Wrong request")
 		return
 	}
+
+	if err := storage.Logout(t); err != nil {
+		logger.Error("Can't logout user", zap.Error(err))
+		c.JSON(http.StatusBadRequest, "Can't logout user")
+		return
+	}
+
+	c.JSON(http.StatusNoContent, "logged out")
 }
