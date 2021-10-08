@@ -19,11 +19,6 @@ public class BookController {
     @Autowired
     private BookService bookService = new BookService();
 
-    @GetMapping("/")
-    public Collection<BookEntity> get(){
-        return bookService.list();
-    }
-
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BookEntity> add(@RequestBody BookEntityDTO book){
         BookEntity a = bookService.add(book.getTitle(), book.getPublicationYear(), book.getDescription(), 0, book.getIdPublisher(), book.getIdAuthors());
@@ -50,7 +45,7 @@ public class BookController {
     public ResponseEntity<Object> update(@RequestBody BookEntityDTO book){
         Optional<BookEntity> t = bookService.get(book.getIdBook());
         if (t.isPresent()) {
-            bookService.update(t.get(), book.getTitle(), book.getDescription(), book.getPublicationYear());
+            bookService.update(t.get(), book.getTitle(), book.getDescription(), book.getPublicationYear(), book.getState());
             return ResponseEntity.status(HttpStatus.OK).body("Book with id : " + book.getIdBook() +" successfully updated");
         }
         else {

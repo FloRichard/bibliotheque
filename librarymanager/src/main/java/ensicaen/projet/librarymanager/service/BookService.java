@@ -44,10 +44,11 @@ public class BookService {
             return false;
     }
 
-    public void update(BookEntity a, String title, String description, String publicationYear){
+    public void update(BookEntity a, String title, String description, String publicationYear, int state){
         a.setTitle(title);
         a.setDescription(description);
         a.setPublicationYear(publicationYear);
+        a.setState(state);
         bookRepo.save(a);
     }
     

@@ -1,5 +1,6 @@
 package ensicaen.projet.librarymanager.controller;
 
+import ensicaen.projet.librarymanager.entity.AuthorEntity;
 import ensicaen.projet.librarymanager.entity.PublisherEntity;
 import ensicaen.projet.librarymanager.service.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class PublisherController {
     @Autowired
     private PublisherService pubService = new PublisherService();
+
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PublisherEntity> add(@RequestBody PublisherEntity pub){
@@ -69,6 +71,17 @@ public class PublisherController {
         }
         else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No author with this id : " + id);
+        }
+    }
+
+    @GetMapping("/{id}/books")
+    public ResponseEntity<Object> getBooks(@PathVariable String id){
+        Optional<PublisherEntity> publisher = pubService.get(Long.parseLong(id));
+        if(publisher.isPresent()) {
+            return new ResponseEntity<>(publisher.get().getBooks(),HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
     
