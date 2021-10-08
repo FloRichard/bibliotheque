@@ -2,15 +2,29 @@ package storage
 
 import (
 	"context"
+	"os"
 
+	"github.com/FloRichard/bibliotheque/usermanager/pkg/structs"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.uber.org/zap"
 )
 
 var (
-	collection *mongo.Collection
-	logger     *zap.Logger
+	collection  *mongo.Collection
+	logger      *zap.Logger
+	defaultUser = structs.User{
+		FirstName: "Florian",
+		LastName:  "Richard",
+		Login:     "admin",
+		Pwd:       "admin",
+		Roles: []string{
+			"administrator",
+			"contributor",
+			"borrow",
+			"consult",
+		},
+	}
 )
 
 func Init() error {
@@ -33,8 +47,12 @@ func Init() error {
 		logger.Error("Can't ping mongoDB", zap.Error(err))
 		return err
 	}
-	
 
 	collection = client.Database("authDB").Collection("users")
+	if err := AddUser(defaultUser); err != nil {
+		logger.Error("Can't create default user", zap.Error(err))
+		return err
+	}
+	logger.Info("env var", zap.String("", os.Getenv("DEFAULT_LIB_USER")))
 	return nil
 }

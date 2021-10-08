@@ -12,8 +12,8 @@ function addUser(){
         data: {
             first_name: document.getElementById("firstName").value,
             last_name: document.getElementById("lastName").value,
-            login: document.getElementById("pass").value,
-            pwd:document.getElementById("firstName").value,
+            login: document.getElementById("login").value,
+            pwd: document.getElementById("pass").value,
             roles: roleArray
         }
     };

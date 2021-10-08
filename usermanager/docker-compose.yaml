@@ -13,7 +13,6 @@ services:
     networks:
       - lib_network
 
-
   auth_db:
     image: mongo
     restart: always
@@ -27,18 +26,11 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: root
       MONGO_USERNAME: user
       MONGO_PASSWORD: secret
+      DEFAULT_LIB_USER: admin
+      DEFAULT_LIB_PWD: admin
     networks:
       - lib_network
-
-  mongoseed:
-    image: mongo
-    depends_on:
-      - auth_db
-    restart: "no"
-    volumes:
-      - ./database/mongoseed/:/mongoseed/
-  #  entrypoint: [ "bash", "-c", "sleep 10 && mongo --host mongo:27017 --eval 'rs.initiate()'"]      
-    
+      
 networks:
   lib_network:
     name: lib_network
