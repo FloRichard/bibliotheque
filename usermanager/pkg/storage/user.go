@@ -64,7 +64,7 @@ func Logout(token string) error {
 	}
 
 	update := bson.D{
-		{"$set", bson.D{{Key: "token", Value: "token"}}},
+		{"$set", bson.D{{Key: "token", Value: ""}}},
 	}
 	_, err := collection.UpdateOne(context.TODO(), searchFilter, update)
 	if err != nil {
