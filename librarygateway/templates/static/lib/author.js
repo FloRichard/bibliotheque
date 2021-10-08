@@ -1,5 +1,14 @@
 window.onload = function() {
-  axios.get('http://localhost:8081/author/')
+  options = {
+    url: 'http://localhost:8081/author/',
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Authorization': sessionStorage.getItem('token')
+    }
+  }
+  axios(options)
     .then(response => {
       buildHtmlTable(response.data, '#authorDataTable')
     });
@@ -52,7 +61,16 @@ function getAllColumnHeaders(myJson) {
 function sendSearchByName(){
   var name = $('#byName').val();
   $('#authorDataTable').empty();
-  axios.get('http://localhost:8081/author/?byName='+name)
+  options = {
+    url: 'http://localhost:8081/author/?byName='+name,
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Authorization': sessionStorage.getItem('token')
+    }
+  }
+  axios(options)
     .then(response => {
       buildHtmlTable(response.data, '#authorDataTable')
     });
@@ -86,7 +104,16 @@ function deleteAuthor(event){
   var value = row.childNodes[0].value;
   var r = confirm("Voulez-vous vraiment supprimer cet auteur ?");
   if(r == true){
-    axios.delete('http://localhost:8081/author/'+value)
+    options = {
+      url: 'http://localhost:8081/author/'+value,
+      method: 'DELETE',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization': sessionStorage.getItem('token')
+      }
+    }
+    axios(options)
       .then(response => {
         window.alert("Auteur supprimé avec succès");
         location.reload();
@@ -101,7 +128,7 @@ var value;
 function storeUpdateId(event){
   var row = event.target.parentNode.parentNode;
   value = row.childNodes[0].value;
-  var name = row.childNodes[1].innerHTML;
+  var name = row.childNodes[1].childNodes[0].innerHTML;
   $('#updateAuthor').modal({'backdrop': 'static'});
   $('#inputNameUp').val(name);
 }
@@ -133,5 +160,6 @@ function submitAuthorUpdate(){
 function getBooksFromAuthor(event){
   var row = event.target.parentNode.parentNode;
   value = row.childNodes[0].value;
-  document.location.href='../book/book.html?idAuthor='+value;
+  window.location.replace('http://localhost:8080/library/book/?idAuthor='+value)
+  //document.location.href='../book/book.html?idAuthor='+value;
 }

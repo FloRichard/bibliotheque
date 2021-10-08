@@ -16,7 +16,7 @@ function handleLogForm(event){
             console.log("body retrieved : ", responseBody)
         })
 
-        const url='http://localhost:8080/auth/admin';
+        const url='http://localhost:8080/library/';
         window.location.replace(url)
     }).catch((error) => {
         console.log("error" + error)

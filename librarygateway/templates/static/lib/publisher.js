@@ -101,7 +101,7 @@ var value;
 function storeUpdateId(event){
   var row = event.target.parentNode.parentNode;
   value = row.childNodes[0].value;
-  var name = row.childNodes[1].innerHTML;
+  var name = row.childNodes[1].childNodes[0].innerHTML;
   $('#updatePublisher').modal({'backdrop': 'static'});
   $('#inputNameUp').val(name);
 }

@@ -3,11 +3,11 @@
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="../main.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
 	<title>Gestion des éditeurs</title>
 </head>
 <body>
-	<button style="margin: 2em" class="btn btn-secondary" onclick="document.location.href='../accueil/accueil.html'">Retour à l'accueil</button>
+	<button style="margin: 2em" class="btn btn-secondary" onclick="window.location.replace('http://localhost:8080/library/');">Retour à l'accueil</button>
 	<h1>Gestion des éditeurs</h1>
 	<div class="input-group" style="margin:auto;width:50%;margin-bottom: 2em;">
 	  <input id="byName" type="search" class="form-control rounded" placeholder="Rechercher par nom" aria-label="Search"
@@ -45,6 +45,6 @@
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-	<script src="publisher.js"></script>
+	<script src="/static/lib/publisher.js"></script>
 </body>
 </html>
