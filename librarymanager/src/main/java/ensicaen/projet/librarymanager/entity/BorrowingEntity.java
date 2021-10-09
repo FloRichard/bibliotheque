@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
@@ -13,33 +12,30 @@ import java.util.UUID;
 @Entity(name = "borrowing")
 @Table(name = "BORROWING", schema = "PUBLIC", catalog = "LIBRARYDB")
 public class BorrowingEntity {
-    private int idBorrowing;
+    private Long idBorrowing;
     private UUID idUser;
     private BookEntity book;
     private Date dateBorrowing;
     private Date dateReturn;
-    private int borrowingDays;
 
     public BorrowingEntity(){};
 
-    public BorrowingEntity(int borrowingDays, Date dateBorrowing, UUID idUser, BookEntity book){
-        this.borrowingDays=borrowingDays;
+    public BorrowingEntity(Date dateBorrowing, Date dateReturn,  UUID idUser, BookEntity book){
         this.dateBorrowing=dateBorrowing;
-        Calendar c = Calendar.getInstance();
-        c.setTime(dateBorrowing);
-        c.add(Calendar.DATE,borrowingDays);
-        this.dateReturn=c.getTime();
+        this.dateReturn=dateReturn;
         this.idUser=idUser;
         this.book=book;
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "borrowing_sequence")
+    @SequenceGenerator(name="borrowing_sequence",  sequenceName="borrowing_sequence_h2", allocationSize = 1)
     @Column(name = "ID_BORROWING")
-    public int getIdBorrowing() {
+    public Long getIdBorrowing() {
         return idBorrowing;
     }
 
-    public void setIdBorrowing(int idBorrowing) {
+    public void setIdBorrowing(Long idBorrowing) {
         this.idBorrowing = idBorrowing;
     }
 
@@ -81,26 +77,16 @@ public class BorrowingEntity {
         this.dateReturn = dateReturn;
     }
 
-    @Basic
-    @Column(name = "BORROWING_DAYS")
-    public int getBorrowingDays() {
-        return borrowingDays;
-    }
-
-    public void setBorrowingDays(int borrowingDays) {
-        this.borrowingDays = borrowingDays;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BorrowingEntity that = (BorrowingEntity) o;
-        return idBorrowing == that.idBorrowing && dateBorrowing == that.dateBorrowing && Objects.equals(dateReturn, that.dateReturn) && Objects.equals(borrowingDays, that.borrowingDays);
+        return idBorrowing == that.idBorrowing && dateBorrowing == that.dateBorrowing && Objects.equals(dateReturn, that.dateReturn);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idBorrowing, dateBorrowing, dateReturn, borrowingDays);
+        return Objects.hash(idBorrowing, dateBorrowing, dateReturn);
     }
 }

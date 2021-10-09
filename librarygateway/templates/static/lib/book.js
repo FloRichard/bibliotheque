@@ -52,6 +52,7 @@ window.onload = function() {
   }
     fillSelectAuthors();
     fillSelectPublishers();
+    fillSelectUsers();
 };
 
 // Builds the HTML Table out of myJson.
@@ -59,7 +60,8 @@ function buildHtmlTable(myJson,selector) {
   var columns = getAllColumnHeaders(myJson);
   columns.push('modify')
   columns.push('delete')
-  $(selector).append('<th scope="col">Titre</th><th scope="col">Date de publication</th><th scope="col">Description</th><th scope="col">État</th><th scope="col">Éditeur</th><th scope="col">Auteur(s)</th><th scope="col">Modifier</th><th scope="col">Supprimer</th>')
+  columns.push('borrow')
+  $(selector).append('<th scope="col">Titre</th><th scope="col">Date de publication</th><th scope="col">Description</th><th scope="col">État</th><th scope="col">Éditeur</th><th scope="col">Auteur(s)</th><th scope="col">Modifier</th><th scope="col">Supprimer</th><th scope="col">Emprunter</th>')
   for (var i = 0; i<myJson.length; i++){
     var row$ = $('<tr/>');
     for (var j = 0; j<columns.length+2; j++){
@@ -68,16 +70,23 @@ function buildHtmlTable(myJson,selector) {
         if(columns[j] == 'modify'){
           if(sessionStorage.getItem('roles').includes('contributor') || sessionStorage.getItem('roles').includes('administrator'))
             row$.append($('<td/>').html('<button class="btn btn-primary" onclick="storeUpdateId(event);">Modifier</button>'))
-          else{
+          else
             row$.append($('<td/>').html('<button class="btn btn-primary" disabled>Modifier</button>'))
-          }
         }
-        if(columns[j] == 'delete')
+        if(columns[j] == 'delete'){
           if(sessionStorage.getItem('roles').includes('contributor') || sessionStorage.getItem('roles').includes('administrator'))
             row$.append($('<td/>').html('<button class="btn btn-danger" onclick="deleteBook(event);">Supprimer</button>'))
-          else{
+          else
             row$.append($('<td/>').html('<button class="btn btn-danger" disabled>Supprimer</button>'))
-          }
+        }
+        if(columns[j] == 'borrow'){
+          if(sessionStorage.getItem('roles').includes('contributor') || sessionStorage.getItem('roles').includes('administrator') || sessionStorage.getItem('roles').includes('borrow'))
+            if(myJson[i]['state']==0){
+              row$.append($('<td/>').html('<button class="btn btn-warning" onclick="storeBorrowId(event);">Emprunter</button>'))
+            }
+          else
+            row$.append($('<td/>').html('<button class="btn btn-warning" disabled>Emprunter</button>'))
+        }
       }
 
       else if(columns[j] == 'idBook'){
@@ -182,13 +191,34 @@ function fillSelectPublishers(){
     }
   }
   axios(options)
-    .then(response => {
+    .then(response =>  {
       var columns = []
       columns.push('idPublisher')
       columns.push('name')
       var myJson = response.data;
       for (var i = 0; i<myJson.length; i++){
         $('#inputPublisher').append('<option value="'+myJson[i][columns[0]]+'">'+myJson[i][columns[1]]+'</option>');
+      }
+    }).catch((error) => {
+        console.log("Erreur : " + error)
+        alert(error)
+    });
+}
+
+function fillSelectUsers(){
+  options = {
+        url: 'http://localhost:8081/auth/users',
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Authorization': sessionStorage.getItem('token'),
+        },
+    };
+    axios(options)
+    .then(response => {
+      for (const user of response.data) {
+        $('#inputUser').append('<option value="'+user.id+'">' + user.first_name + " " + user.last_name + '</option>');
       }
     });
 }
@@ -294,5 +324,49 @@ function submitBookUpdate(){
       location.reload();
     }).catch(err => {
       window.alert("Erreur lors de la modification !");
+    });
+}
+
+
+function storeBorrowId(event){
+  var row = event.target.parentNode.parentNode;
+  value = row.childNodes[0].value;
+  $(function () {
+    // ACTIVATION DU DATEPICKER 
+      $('.datepicker').datepicker({
+          clearBtn: true,
+          format: "yyyy-MM-dd"
+      });
+  });
+  $('#borrowBook').modal({'backdrop': 'static'});
+}
+
+function submitBookBorrow(){
+  var dateBorrowing = $('#inputBorrowDate').val();
+  dateBorrowing += ' 00:00:00';
+  var dateReturn = $('#inputReturnDate').val();
+  dateReturn += ' 00:00:00';
+  var idUser = $('#inputUser').val();
+  options = {
+    url: 'http://localhost:8081/borrowing/',
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'content-type': 'application/json; charset=UTF-8',
+      'Authorization': sessionStorage.getItem('token')
+    },
+    data:{
+      dateBorrowing:dateBorrowing,
+      dateReturn:dateReturn,
+      idUser:idUser,
+      idBook:value
+    }
+  }
+  axios(options).
+    then(response => {
+      window.alert("Livre emprunté avec succès");
+      location.reload();
+    }).catch(err => {
+      window.alert("Erreur lors de l'emprunt !");
     });
 }
