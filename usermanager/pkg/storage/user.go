@@ -17,6 +17,19 @@ func AddUser(u structs.User) error {
 	return nil
 }
 
+func GetUser(id string) (structs.User, error) {
+	filter := bson.D{
+		{Key: "uuid", Value: id},
+	}
+
+	u := structs.User{}
+	if err := collection.FindOne(context.TODO(), filter).Decode(&u); err != nil {
+		logger.Error("Can't find user", zap.Error(err))
+		return structs.User{}, err
+	}
+	return u, nil
+}
+
 func GetAllUser() ([]structs.User, error) {
 	cursor, err := collection.Find(context.TODO(), bson.M{})
 	if err != nil {

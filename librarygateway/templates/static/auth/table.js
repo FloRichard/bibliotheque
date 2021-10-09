@@ -69,7 +69,7 @@ const appendUsers = (user, userIndex) => {
     modifyBtn.className = 'btn btn-primary';
     modifyBtn.id = user.id
     modifyBtn.textContent = 'Modifier';
-    //deleteBtn.onclick = (function(entry) {return function() {chooseUser(entry);}})(entry);
+    modifyBtn.onclick = function(){fillUpadteModale(user); getUsers()};
     action.appendChild(modifyBtn);
 
     userboardTableBodyRow.append(FirstName, LastName, roles, action) // Append all 5 cells to the table row
@@ -102,4 +102,12 @@ const getUsers = () => {
         alert(error)
         window.location = 'http://localhost:8080/auth/login'
     });
+}
+
+function fillUpadteModale(user){
+    $("#modalUpdateUser").modal();
+    document.getElementById('firstNameUpdate').value = user.first_name
+    document.getElementById('lastNameUpdate').value = user.last_name
+    document.getElementById('actualRoles').value = user.roles[0]
+    document.getElementById('userIDUpdate').value = user.id
 }

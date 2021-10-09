@@ -25,6 +25,33 @@ function addUser(){
     })
 }
 
+
+
+function updateUser(){
+    let roleArray = document.getElementById("rolesSelectUpdate").value.split(',')
+    options = {
+        url: 'http://'+window.location.hostname+':8081/auth/user/',
+        method: 'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Authorization': sessionStorage.getItem('token')
+        },
+        data: {
+            first_name: document.getElementById('firstNameUpdate').value,
+            last_name: document.getElementById('lastNameUpdate').value ,
+            roles: roleArray,
+            id: document.getElementById('userIDUpdate').value
+        }
+    };
+
+    axios(options)
+    .then(response => {
+        console.log("Update user "+ response.status);
+        $('#modalUpdateUser').modal('hide');
+    })
+}
+
 function deleteUser(userID){
     options = {
         url: 'http://' + window.location.hostname + ':8081/auth/user/'+userID,

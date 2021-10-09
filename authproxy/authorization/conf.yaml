@@ -18,11 +18,19 @@ authorization:
       remote_host: "http://usermanager:8082"
       roles: 
         - "administrator"
+    "PUT":
+      remote_host: "http://usermanager:8082"
+      roles: 
+        - "administrator"
   "/auth/user/:id":
     "DELETE":
       remote_host: "http://usermanager:8082"
       roles: 
         - "administrator"
+    "GET":
+      remote_host: "http://usermanager:8082"
+      roles: 
+        - "consult"
 
   "/book/":
     "GET":

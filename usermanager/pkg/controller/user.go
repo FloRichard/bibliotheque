@@ -91,3 +91,21 @@ func GetUsers(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, users)
 }
+
+func GetUser(c *gin.Context) {
+	userID := c.Param("id")
+	if userID == "" {
+		logger.Error("Can't retrieve userID param")
+		c.JSON(http.StatusBadRequest, "Bad request")
+		return
+	}
+
+	user, err := storage.GetUser(userID)
+	if err != nil {
+		logger.Error("Can't retrieve user")
+		c.JSON(http.StatusBadRequest, "Bad request")
+		return
+	}
+
+	c.JSON(http.StatusOK, user)
+}
