@@ -7,8 +7,13 @@ window.onload = function() {
 			showAdmin()
 			return
 		}
+		if(roles.includes('borrow')){
+			showBorrowing()
+			return
+		}
 	}
 	deleteAdmin()
+	deleteBorrowing()
 };
 
 function deleteAdmin(){
@@ -17,4 +22,12 @@ function deleteAdmin(){
 
 function showAdmin(){
 	$(".admin").css("visibility","visible");
+}
+
+function deleteBorrowing(){
+	$(".borrow").remove();
+}
+
+function showBorrowing(){
+	$(".borrow").css("visibility","visible");
 }

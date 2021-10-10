@@ -335,29 +335,29 @@ function storeBorrowId(event){
     // ACTIVATION DU DATEPICKER 
       $('.datepicker').datepicker({
           clearBtn: true,
-          format: "yyyy-MM-dd"
+          format: "yyyy-mm-dd"
       });
   });
   $('#borrowBook').modal({'backdrop': 'static'});
 }
 
 function submitBookBorrow(){
-  var dateBorrowing = $('#inputBorrowDate').val();
-  dateBorrowing += ' 00:00:00';
-  var dateReturn = $('#inputReturnDate').val();
-  dateReturn += ' 00:00:00';
+  var dateB = $('#inputBorrowDate').val();
+  var dateBString = dateB.toString() + ' 00:00:00';
+  var dateR = $('#inputReturnDate').val();
+  var dateRString = dateR.toString() + ' 00:00:00';
   var idUser = $('#inputUser').val();
   options = {
     url: 'http://localhost:8081/borrowing/',
-    method: 'PUT',
+    method: 'POST',
     headers: {
       'Accept': 'application/json',
       'content-type': 'application/json; charset=UTF-8',
       'Authorization': sessionStorage.getItem('token')
     },
     data:{
-      dateBorrowing:dateBorrowing,
-      dateReturn:dateReturn,
+      dateBorrowing:dateBString,
+      dateReturn:dateRString,
       idUser:idUser,
       idBook:value
     }

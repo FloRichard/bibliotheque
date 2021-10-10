@@ -20,7 +20,8 @@ func main() {
 		GET("/", handler.GetHomePage).
 		GET("/author/", handler.GetAuthor).
 		GET("/publisher/", handler.GetPublisher).
-		GET("/book/", handler.GetBook)
+		GET("/book/", handler.GetBook).
+		GET("/borrowing/", handler.GetBorrowing)
 
 	r.Run(":8080")
 }

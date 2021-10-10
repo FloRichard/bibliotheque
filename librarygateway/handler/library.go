@@ -25,3 +25,8 @@ func GetBook(c *gin.Context) {
 	c.HTML(http.StatusOK, "book.html", gin.H{})
 	return
 }
+
+func GetBorrowing(c *gin.Context) {
+	c.HTML(http.StatusOK, "borrowing.html", gin.H{})
+	return
+}

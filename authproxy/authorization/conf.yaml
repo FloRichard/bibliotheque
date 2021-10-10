@@ -112,3 +112,21 @@ authorization:
       remote_host: "http://librarymanager:8083"
       roles: 
         - "consult"
+  "/borrowing/":
+    "GET":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "borrow"
+    "POST":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "borrow"
+  "/borrowing/:id":
+    "GET":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "borrow"
+    "DELETE":
+      remote_host: "http://librarymanager:8083"
+      roles: 
+        - "borrow"

@@ -83,7 +83,10 @@ function sendSearchByName(){
   }
   axios(options)
     .then(response => {
-      buildHtmlTable(response.data, '#publisherDataTable')
+      window.alert("Livre rendu avec succès");
+      location.reload();
+    }).catch(err => {
+        window.alert("Erreur lors du rendu du livre !");
     });
 }
 

@@ -45,16 +45,22 @@
 				<button class="btn btn-primary" onclick="window.location.replace('http://localhost:8080/library/publisher/');">Gestion</button>
 			</td>
 		</tr>
-			<tr class="admin">
-				<td colspan="3">
-					<h2>Gestion administrateur</h2>
-				</td>
-			</tr>
-			<tr class="admin">
-				<td colspan="3">
-					<button class="btn btn-danger" onclick="window.location.replace('http://localhost:8080/auth/admin');">Administrer</button>
-				</td>
-			</tr>
+		<tr>
+			<td class="borrow">
+				<h2>Gestion emprunts</h2>
+			</td>
+			<td class="admin">
+				<h2>Gestion administrateur</h2>
+			</td>
+		</tr>
+		<tr>
+			<td class="borrow">
+				<button class="btn btn-danger" onclick="window.location.replace('http://localhost:8080/library/borrowing');">Emprunts</button>
+			</td>
+			<td class="admin">
+				<button class="btn btn-danger" onclick="window.location.replace('http://localhost:8080/auth/admin');">Administrer</button>
+			</td>
+		</tr>
 
 	</table>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
