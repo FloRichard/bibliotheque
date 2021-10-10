@@ -84,6 +84,7 @@ function sendSearchByName(){
   }
   axios(options)
     .then(response => {
+      $('#authorDataTable').empty();
       buildHtmlTable(response.data, '#authorDataTable')
     });
 }

@@ -1,5 +1,5 @@
 # bibliotheque
-Projet de gestion d'une bibliothèque crée par Julien Monteil et Florian RICHARD.
+Projet de gestion d'une bibliothèque créé par Julien Monteil et Florian RICHARD.
 
 Le sujet de TP ce trouve à la racine du projet tout comme la preuve d'éxecution.
 
