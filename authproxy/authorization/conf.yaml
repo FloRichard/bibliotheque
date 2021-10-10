@@ -3,7 +3,7 @@ authorization:
     "GET":
       remote_host: "http://usermanager:8082"
       roles: 
-        - "administrator"
+        - "borrow"
   "/auth/login":
     "POST":
       remote_host: "http://usermanager:8082"
@@ -112,7 +112,7 @@ authorization:
       remote_host: "http://librarymanager:8083"
       roles: 
         - "consult"
-        
+
   "/borrowing/":
     "GET":
       remote_host: "http://librarymanager:8083"
