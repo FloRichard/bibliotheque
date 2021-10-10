@@ -18,14 +18,22 @@ Pour pouvoir utiliser notre application vous devez disposer des logiciels suivan
 
  
 ## Deployer les services
-Deployer l'ensemble des services(recommandé): 
-- Aller à la racine du projet `/bibliotheque`
-- Ouvrez un terminal et selon votre système d'exploitation tapez :
+Il y'a trois moyens pour déployer nos services.
+
+Si vous avez `Make` d'installé sur votre machine:
+
+- Deployer l'ensemble des services(recommandé): 
+  - Aller à la racine du projet `/bibliotheque`
+  - Ouvrez un terminal et selon votre système d'exploitation tapez :
     - `make deploy_linux`
     - `make deploy_windows`
 
-Deployer les services un à un (non-recommandé):
-- Ouvrez un terminal et allez dans le dossier de chaque service et rentrez la commande `make deploy`
+- Deployer les services un à un (non-recommandé):
+    - Ouvrez un terminal et allez dans le dossier de chaque service et rentrez la commande `make deploy`
+
+Si vous n'avez pas `Make` d'installer sur votre machine:
+
+- Aller à la racine de chaque service et rentrez la commande `docker-compose up -d`
 
 Chaque services va écouter un port spécifique de votre machine, il faut donc veillez au préable que les ports suivants sont disponibles.
 - librarygateway: **8080**
